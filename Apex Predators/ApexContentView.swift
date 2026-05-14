@@ -11,9 +11,11 @@ struct ContentView: View {
     var predatorsList = ApexPredatorList()
     @State var searchDinoText = ""
     @State var alphabetical = false
+    @State var currentSelection = APType.all
     
     var filterdDinoList :  [ApexPredatorsModel] {
         predatorsList.sort(by: alphabetical)
+        predatorsList.filter(by: currentSelection)
         return predatorsList.search(for: searchDinoText)
     }
     
@@ -62,7 +64,16 @@ struct ContentView: View {
                     }
                 }
                 ToolbarItem(placement: .topBarTrailing){
-                    
+                    Menu{
+                        Picker("Filter" , selection: $currentSelection){
+                            ForEach(APType.allCases){
+                                type in
+                                Label(type.rawValue.capitalized, systemImage: type.icons)
+                            }
+                        }
+                    }label: {
+                        Image(systemName: "slider.horizontal.3")
+                    }
                 }
             }
         }

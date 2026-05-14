@@ -9,6 +9,7 @@ import Foundation
 
 
 class ApexPredatorList {
+    var allApexPredatorList:[ApexPredatorsModel] = []
     var apexPredatorList : [ApexPredatorsModel] = []
     
     init (){
@@ -23,6 +24,7 @@ class ApexPredatorList {
                 let jsonDecoder = JSONDecoder()
                 jsonDecoder.keyDecodingStrategy = .convertFromSnakeCase
                 apexPredatorList = try jsonDecoder.decode([ApexPredatorsModel].self, from: data)
+                allApexPredatorList = apexPredatorList
                 print(apexPredatorList)
             }catch{
                 print("Error decoding data \(error)")
@@ -49,6 +51,17 @@ class ApexPredatorList {
         else{
             return apexPredatorList.filter{predator in
                 predator.name.localizedCaseInsensitiveContains(searchTerm)
+            }
+        }
+    }
+
+    
+    func filter (by selection : APType){
+        if(selection == .all){
+            apexPredatorList = allApexPredatorList
+        }else{
+            apexPredatorList = allApexPredatorList.filter{ predator in
+                return predator.type == selection
             }
         }
     }
