@@ -34,7 +34,7 @@ class ApexPredatorList {
     
     
     func sort(by alphabetical : Bool){
-        apexPredatorList.sort{ predator1 , predator2 in
+        allApexPredatorList.sort{ predator1 , predator2 in
             if alphabetical{
                 predator1.name < predator2.name
             }

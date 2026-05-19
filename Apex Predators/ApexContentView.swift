@@ -6,6 +6,8 @@
 //
 
 import SwiftUI
+import MapKit
+
 
 struct ContentView: View {
     var predatorsList = ApexPredatorList()
@@ -24,9 +26,7 @@ struct ContentView: View {
             // 1. The List starts here
             List(filterdDinoList) { predator in
                 NavigationLink {
-                    Image(predator.image)
-                        .resizable()
-                        .scaledToFit()
+                    ApexPredatorDetailView(predator: predator, cameraPosition: .camera(MapCamera(centerCoordinate: predator.location, distance: 30000)))
                 } label: {
                     HStack {
                         Image(predator.image)
